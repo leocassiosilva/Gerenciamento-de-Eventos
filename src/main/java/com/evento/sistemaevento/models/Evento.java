@@ -1,10 +1,12 @@
 package com.evento.sistemaevento.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 
 
@@ -20,7 +22,8 @@ public class Evento implements Serializable{
 	private String data;
 	private String horario;
 	
-	
+	@OneToMany
+	private List<Convidado> convidado;
 	
 	public long getCodigo() {
 		return codigo;
