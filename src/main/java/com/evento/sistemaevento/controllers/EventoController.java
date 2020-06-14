@@ -46,6 +46,9 @@ public class EventoController {
 		Evento evento = er.findByCodigo(codigo);
 		ModelAndView mv = new ModelAndView("evento/detalhesEvento");
 		mv.addObject("evento", evento);
+		
+		Iterable<Convidado> convidado = cr.findByEvento(evento);
+		mv.addObject("convidados", convidado);
 		return mv;
 	}
 	
@@ -58,4 +61,5 @@ public class EventoController {
 		cr.save(convidado);
 		return "redirect:/{codigo}";
 	}
+	
 }
