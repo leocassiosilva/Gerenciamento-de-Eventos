@@ -1,11 +1,15 @@
 package com.evento.sistemaevento.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.evento.sistemaevento.models.Convidado;
 import com.evento.sistemaevento.models.Evento;
@@ -27,8 +31,15 @@ public class EventoController {
 	}
 	
 	@RequestMapping(value="/cadastrarEvento", method = RequestMethod.POST)
-	public String form(Evento evento) {
+	public String form(@Valid Evento evento, BindingResult result, RedirectAttributes attributes) {
+		
+		if(result.hasErrors()) {
+			attributes.addFlashAttribute("mensagem", "Verifique os campos!");
+			return "redirect:/cadastrarEvento";
+		}
+		
 		er.save(evento);
+		attributes.addFlashAttribute("mansagem", "Evento cadastrado com sucesso!");
 		return "redirect:/cadastrarEvento";
 	}
 	
@@ -54,11 +65,17 @@ public class EventoController {
 	
 	
 	@RequestMapping(value="/{codigo}", method=RequestMethod.POST)
-	public String detalhesEventoPost(@PathVariable("codigo") long codigo,  Convidado convidado){
-		
+	public String detalhesEventoPost(@PathVariable("codigo") long codigo,  @Valid Convidado convidado, BindingResult result, RedirectAttributes attributes){
+		/*Ex: se o usuario não preencher um campo do formulario
+		 * dai entra dentro do if e aparece essa mensagem*/
+		if(result.hasErrors()) {
+			attributes.addFlashAttribute("mensagem", "Verifique os campos!");
+			return "redirect:/{codigo}";
+		}
 		Evento evento = er.findByCodigo(codigo);
 		convidado.setEvento(evento);
 		cr.save(convidado);
+		attributes.addFlashAttribute("mensagem", "Convidado adicionado com sucesso!");
 		return "redirect:/{codigo}";
 	}
 	
