@@ -6,8 +6,8 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet" />
 <!--Import materialize.css-->
-<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"
-	media="screen,projection" />
+<link type="text/css" rel="stylesheet"
+	href="materialize/css/materialize.min.css" media="screen,projection" />
 
 <!--Let browser know website is optimized for mobile-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,31 +15,40 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
 <title>EventosApp</title>
+<link rel="stylesheet" href="style/style.css"/>
 </head>
 <body>
-	<h1>Lista de Eventos</h1>
-	<h3>
-		<a class="waves-effect waves-light btn" href="/cadastrarEvento"><i
-			class="material-icons left">add_circle_outline
-</i>Cadastrar Evento</a>
-	</h3>
+	<header>
+		<nav>
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">Lista de Eventos</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li><a class="waves-effect waves-light btn" href="/cadastrarEvento"><i
+			class="material-icons left">add_circle_outline </i>Cadastrar evento</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
 	<table class="container">
-	<thead>
-		<tr>
-		<th>Nome</th>
-		<th>Local</th>
-		<th>Data</th>
-		<th>Horario</th>
-		</tr>
-	</thead>
-	<tbody>
-	<tr th:each="evento: ${eventos}">
-		<td><a th:href="${(#mvc.url('EC#detalhesEvento').arg(0, evento.codigo)).build()}"><span th:text="${evento.nome}"></span></a></td>	
-		<td><span th:text="${evento.local}"></span></td>
-		<td><span th:text="${evento.data}"></span></td>
-		<td><span th:text="${evento.horario}"></span></td>
-	</tr>
-	</tbody>
+		<thead>
+			<tr>
+				<th>Nome</th>
+				<th>Local</th>
+				<th>Data</th>
+				<th>Horario</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="evento: ${eventos}">
+				<td><a
+					th:href="${(#mvc.url('EC#detalhesEvento').arg(0, evento.codigo)).build()}"><span
+						th:text="${evento.nome}"></span></a></td>
+				<td><span th:text="${evento.local}"></span></td>
+				<td><span th:text="${evento.data}"></span></td>
+				<td><span th:text="${evento.horario}"></span></td>
+			</tr>
+		</tbody>
 	</table>
 	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
